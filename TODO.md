@@ -1,0 +1,24 @@
+# Todo
+
+- [x] git
+- [x] html
+- [x] css
+- [ ] js
+- [ ] design
+- [ ] performance
+- [ ] debugging
+- [ ] svg
+- [ ] canvas
+- [ ] webgl
+- [ ] audio
+- [ ] video
+- [ ] databases
+- [ ] servers
+- [ ] animation
+- [ ] cs
+  - [ ] object oriented programming
+  - [ ] functional programming
+  - [ ] algorithms
+  - [ ] data structures
+  - [ ] sort
+
