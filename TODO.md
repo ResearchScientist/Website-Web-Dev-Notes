@@ -3,7 +3,8 @@
 - [x] git
 - [x] html
 - [x] css
-- [ ] js
+- [ ] javascript
+- [ ] typescript
 - [ ] design
 - [ ] performance
 - [ ] debugging
@@ -21,4 +22,3 @@
   - [ ] algorithms
   - [ ] data structures
   - [ ] sort
-
