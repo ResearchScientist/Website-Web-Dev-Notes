@@ -12,6 +12,9 @@ interface Props {
 }
 
 const { page } = Astro.props;
+
+console.log(page.url.prev)
+console.log(page.url.next)
 ---
 
 <h1> page {page.currentPage} </h1>
