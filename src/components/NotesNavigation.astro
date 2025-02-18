@@ -11,18 +11,18 @@ const { url, prevUrl, nextUrl } = Astro.props; // hide when done
 <p>this url</p>
 <p>{url}</p>
 
-<nav id="notes-navigation">
+<!-- <nav id="notes-navigation">
     <a href={prevUrl}>Previous Note</a>
-    <!-- <a href={nextUrl}>Next Note</a> -->
+    <a href={nextUrl}>Next Note</a>
     <a href="01-log.md">Next Note</a>
-</nav>
+</nav> -->
 
 
-<!-- for [astro] file
+<!-- for [astro] file -->
 <nav id="notes-navigation">
     {prevUrl ? <a href={prevUrl}>Previous Note</a> : null}
     {nextUrl ? <a href={nextUrl}>Next Note</a> : null}
-</nav> -->
+</nav>
 
 <!-- <h1>{Astro.url}</h1>
 <h2 id="addr"></h2> -->
