@@ -12,8 +12,8 @@ const { currUrl, prevUrl, nextUrl } = Astro.props; // hide when done
 </nav> -->
 
 <nav id="notes-navigation">
-    {prevUrl && <a href={prevUrl}>Previous Note</a>}
-    {nextUrl && <a href={nextUrl}>Next Note</a>}
+    {prevUrl && <a href={prevUrl} rel="prev">Previous Note</a>}
+    {nextUrl && <a href={nextUrl} rel="next">Next Note</a>}
 </nav>
 
 <!-- for [astro] file -->

@@ -23,3 +23,9 @@ console.log(page.url.next)
 <p>Debug: Prev URL = {page.url.prev}</p>
 
 <NotesNavigation currUrl={page.url.current} prevUrl={page.url.prev} nextUrl={page.url.next}/>
+
+<script>
+  console.log('Current URL:', window.location.href);
+  console.log('Previous URL:', document.querySelector('a[rel="prev"]')?.getAttribute('href'));
+  console.log('Next URL:', document.querySelector('a[rel="next"]')?.getAttribute('href'));
+</script>
