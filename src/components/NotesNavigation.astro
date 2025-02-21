@@ -1,20 +1,26 @@
 ---
-const { page } = Astro.props;
-const currentNote = page.data[0];
+const { prevNote, nextNote } = Astro.props;
 ---
 
-<h1>{currentNote.frontmatter.title}</h1>
 <p>this url</p>
 <p>{Astro.url}</p>
-<!-- <p>{page.url.current}</p> -->
-
-<p>Total Notes: {page.lastPage}</p>
-
-<!-- <p>{allNotesArray.length}</p> -->
 
 <nav id="notes-navigation">
-    <!-- <a href={prevUrl}>Previous Note</a> -->
-    <!-- <a href={nextUrl}>Next Note</a> -->
+    {prevNote && (
+        <a href={prevNote.url} class="nav-button prev-button">
+            &larr; Previous: {prevNote.frontmatter.title}
+        </a>
+    )}
+    {nextNote && (
+        <a href={nextNote.url} class="nav-button next-button">
+            Next: {nextNote.frontmatter.title} &rarr;
+        </a>
+    )}
+</nav>
+
+<!-- <nav id="notes-navigation">
+    <a href={prevNote.url}>Previous Note</a>
+    <a href={nextNote.url}>Next Note</a> -->
 </nav>
 
 <style>
