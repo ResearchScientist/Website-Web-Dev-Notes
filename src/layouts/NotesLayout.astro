@@ -1,7 +1,9 @@
 ---
 import MainLayout from "./MainLayout.astro";
 import NotesNavigation from "../components/NotesNavigation.astro";
-const { frontmatter,prevNote,nextNote } = Astro.props;
+const { frontmatter, prevNote, nextNote } = Astro.props;
+
+console.log('the NotesLayout props are', { frontmatter, prevNote, nextNote });
 ---
 <MainLayout pageTitle={frontmatter.title} pageDescription={frontmatter.description}>
     <main>

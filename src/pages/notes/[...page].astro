@@ -1,38 +1,46 @@
 ---
-import NotesLayout from '../../layouts/NotesLayout.astro';
-import type { MarkdownInstance } from 'astro';
-
-interface Frontmatter {
-  title: string;
-  slug?: string;
-  // Add other frontmatter properties you use
-}
-
-export async function getStaticPaths() {
-  const allNotes = await Astro.glob<MarkdownInstance<Frontmatter>>('../../pages/notes/**/*.md');
-
-  return allNotes.map((note, index) => ({
-    params: { page: note.frontmatter.slug || index.toString() },
-    props: { 
-      note,
-      prevNote: index > 0 ? {
-        url: `/notes/${allNotes[index - 1].frontmatter.slug || (index - 1).toString()}`,
-        frontmatter: allNotes[index - 1].frontmatter
-      } : null,
-      nextNote: index < allNotes.length - 1 ? {
-        url: `/notes/${allNotes[index + 1].frontmatter.slug || (index + 1).toString()}`,
-        frontmatter: allNotes[index + 1].frontmatter
-      } : null
-    },
-  }));
-}
-
-const { note, prevNote, nextNote } = Astro.props;
+console.log('process the page astro');
 ---
 
-<NotesLayout frontmatter={note.frontmatter} prevNote={prevNote} nextNote={nextNote}>
-  <article set:html={note.compiledContent()} />
-</NotesLayout>
+<!-- // import NotesLayout from '../../layouts/NotesLayout.astro'; -->
+<!-- // import type { MarkdownInstance } from 'astro'; -->
+
+<!-- // interface Frontmatter {
+//   title: string;
+//   slug?: string;
+// }
+
+// export async function getStaticPaths() {
+//   console.log('static paths called');
+//   const allNotes = await Astro.glob<MarkdownInstance<Frontmatter>>('../../pages/notes/**/*.md');
+//     console.log('page astro notes length',allNotes.length);
+//   return allNotes.map((note, index) => ({
+//     params: { page: note.frontmatter.slug || index.toString() },
+//     props: { 
+//       note,
+//       prevNote: index > 0 ? {
+//         url: `/notes/${allNotes[index - 1].frontmatter.slug || (index - 1).toString()}`,
+//         frontmatter: allNotes[index - 1].frontmatter
+//       } : null,
+//       nextNote: index < allNotes.length - 1 ? {
+//         url: `/notes/${allNotes[index + 1].frontmatter.slug || (index + 1).toString()}`,
+//         frontmatter: allNotes[index + 1].frontmatter
+//       } : null
+//     },
+//   }));
+// }
+
+// const { note, prevNote, nextNote } = Astro.props;
+// console.log('the page astro props are ', {note ,prevNote, nextNote});
+// ---
+
+// <NotesLayout frontmatter={note.frontmatter} prevNote={prevNote} nextNote={nextNote}>
+//   <article set:html={note.compiledContent()} />
+// </NotesLayout> -->
+
+
+
+
 
 <!-- ---
 // import NotesNavigation from '../../components/NotesNavigation.astro';
