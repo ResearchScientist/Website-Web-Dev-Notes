@@ -1,16 +1,20 @@
 ---
-const allNotesArray = Object.values(import.meta.glob('../pages/notes/**/*.md', { eager: true }));
-const { currUrl, prevUrl, nextUrl } = Astro.props; // hide when done
+const { page } = Astro.props;
+const currentNote = page.data[0];
 ---
 
+<h1>{currentNote.frontmatter.title}</h1>
 <p>this url</p>
 <p>{Astro.url}</p>
+<!-- <p>{page.url.current}</p> -->
 
-<p>{allNotesArray.length}</p>
+<p>Total Notes: {page.lastPage}</p>
+
+<!-- <p>{allNotesArray.length}</p> -->
 
 <nav id="notes-navigation">
-    <a href={prevUrl}>Previous Note</a>
-    <a href={nextUrl}>Next Note</a>
+    <!-- <a href={prevUrl}>Previous Note</a> -->
+    <!-- <a href={nextUrl}>Next Note</a> -->
 </nav>
 
 <style>
