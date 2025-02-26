@@ -6,22 +6,23 @@ import NotesNavigation from '../../components/NotesNavigation.astro';
 import NotesLayout from '../../layouts/NotesLayout.astro';
 
 export async function getStaticPaths({ paginate }) {
-  // const allNotes = Object.values(import.meta.glob('../**/*.md', { eager: true }));
-  const allNotes = await Astro.glob('../../pages/notes/**/*.md');
+  const allNotes = await Promise.all(
+    Object.values(import.meta.glob('../../pages/notes/**/*.md', { eager: true }))
+  );
   const allNotesTotal = allNotes.length;
+  return paginate(allNotes, { pageSize: 1 });
+}
+
+//export async function getStaticPaths({ paginate }) {
+  // const allNotes = Object.values(import.meta.glob('../**/*.md', { eager: true }));
+  //const allNotes = await Astro.glob('../../pages/notes/**/*.md');
+  //const allNotesTotal = allNotes.length;
   // return paginate(allNotes, { pageSize: 1 });
 }
 
 const { page } = Astro.props;
 ---
 
-<!-- import NotesLayout from '../../layouts/NotesLayout.astro';
-import type { MarkdownInstance } from 'astro';
-
-interface Frontmatter {
-title: string;
-  slug ?: string; -->
-}
 
 <!-- export async function getStaticPaths() {
   const allNotes = await Astro.glob<MarkdownInstance<Frontmatter>>('../../pages/notes/**/*.md');
@@ -46,9 +47,6 @@ title: string;
 // console.log('the page astro props are ', {note ,prevNote, nextNote});
 //  -->
 
-<!-- // <NotesLayout frontmatter={note.frontmatter} prevNote={prevNote} nextNote={nextNote}>
-//   <article set:html={note.compiledContent()} />
-// </NotesLayout> -->
 
 <!-- <NotesNavigation currUrl={page.url.current} prevUrl={page.url.prev} nextUrl={page.url.next}/> -->
 <NotesNavigation page={page} />
