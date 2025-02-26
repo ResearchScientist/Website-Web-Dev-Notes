@@ -5,13 +5,13 @@ import MainLayout from '../../layouts/MainLayout.astro';
 import NotesNavigation from '../../components/NotesNavigation.astro';
 import NotesLayout from '../../layouts/NotesLayout.astro';
 
-// export async function getStaticPaths({ paginate }) {
-//   const allNotes = await Promise.all(
-//     Object.values(import.meta.glob('../../pages/notes/**/*.md', { eager: true }))
-//   );
-//   const allNotesTotal = allNotes.length;
-//   return paginate(allNotes, { pageSize: 1 });
-// }
+export async function getStaticPaths({ paginate }) {
+  const allNotes = await Promise.all(
+    Object.values(import.meta.glob('../../pages/notes/**/*.md', { eager: true }))
+  );
+  const allNotesTotal = allNotes.length;
+  return paginate(allNotes, { pageSize: 1 });
+}
 
 //export async function getStaticPaths({ paginate }) {
   // const allNotes = Object.values(import.meta.glob('../**/*.md', { eager: true }));
@@ -22,26 +22,6 @@ import NotesLayout from '../../layouts/NotesLayout.astro';
 
 // const { page } = Astro.props;
 ---
-
-
-<!-- export async function getStaticPaths() {
-  const allNotes = await Astro.glob<MarkdownInstance<Frontmatter>>('../../pages/notes/**/*.md');
-    console.log('page astro notes length',allNotes.length);
-  return allNotes.map((note, index) => ({
-    params: { page: note.frontmatter.slug || index.toString() },
-    props: { 
-      note,
-      prevNote: index > 0 ? {
-        url: `/notes/${allNotes[index - 1].frontmatter.slug || (index - 1).toString()}`,
-        frontmatter: allNotes[index - 1].frontmatter
-      } : null,
-      nextNote: index < allNotes.length - 1 ? {
-        url: `/notes/${allNotes[index + 1].frontmatter.slug || (index + 1).toString()}`,
-        frontmatter: allNotes[index + 1].frontmatter
-      } : null
-    },
-  }));
-} -->
 
 <!-- // const { note, prevNote, nextNote } = Astro.props;
 // console.log('the page astro props are ', {note ,prevNote, nextNote});
