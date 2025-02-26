@@ -1,15 +1,16 @@
 ---
-const { prevNote, nextNote } = Astro.props;
+const { currentUrl, frontmatter, prevNote, nextNote } = Astro.props;
+console.log('notes nav current page' , {currentUrl});
 console.log('the notes nav props are ', {prevNote} ,{nextNote});
 ---
 
 <p>notes navigation</p>
-<p>{prevNote}</p>
+<p>Current URL: {currentUrl}</p>
 
-<p>prevNote: {JSON.stringify(prevNote)}</p>
-<p>nextNote: {JSON.stringify(nextNote)}</p>
+<!-- <p>prevNote: {JSON.stringify(prevNote)}</p>
+<p>nextNote: {JSON.stringify(nextNote)}</p> -->
 
-<nav id="notes-navigation">
+<!-- <nav id="notes-navigation">
     {prevNote && (
         <a href={prevNote.url}>
             &larr; Previous: {prevNote.frontmatter.title}
@@ -20,12 +21,12 @@ console.log('the notes nav props are ', {prevNote} ,{nextNote});
             Next: {nextNote.frontmatter.title} &rarr;
         </a>
     )}
-</nav>
-
-<!-- <nav id="notes-navigation">
-    <a href={prevNote.url}>Previous Note</a>
-    <a href={nextNote.url}>Next Note</a>
 </nav> -->
+
+<nav id="notes-navigation">
+    <a href={prevNote}>Previous Note</a>
+    <a href={nextNote}>Next Note</a>
+</nav>
 
 <style>
     #notes-navigation {

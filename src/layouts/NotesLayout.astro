@@ -3,6 +3,7 @@ import MainLayout from "./MainLayout.astro";
 import NotesNavigation from "../components/NotesNavigation.astro";
 const { frontmatter, prevNote, nextNote } = Astro.props;
 
+const currentUrl = Astro.url.pathname;
 console.log('the NotesLayout props are', { frontmatter, prevNote, nextNote });
 ---
 <MainLayout pageTitle={frontmatter.title} pageDescription={frontmatter.description}>
@@ -21,7 +22,7 @@ console.log('the NotesLayout props are', { frontmatter, prevNote, nextNote });
             </section>
         </section>
         <slot />
-        <NotesNavigation prevNote={prevNote} nextNote={nextNote} />
+        <NotesNavigation currentUrl={currentUrl} prevNote={prevNote} nextNote={nextNote} />
     </main>
 </MainLayout>
 
