@@ -5,13 +5,13 @@ import MainLayout from '../../layouts/MainLayout.astro';
 import NotesNavigation from '../../components/NotesNavigation.astro';
 import NotesLayout from '../../layouts/NotesLayout.astro';
 
-export async function getStaticPaths({ paginate }) {
-  const allNotes = await Promise.all(
-    Object.values(import.meta.glob('../../pages/notes/**/*.md', { eager: true }))
-  );
-  const allNotesTotal = allNotes.length;
-  return paginate(allNotes, { pageSize: 1 });
-}
+// export async function getStaticPaths({ paginate }) {
+//   const allNotes = await Promise.all(
+//     Object.values(import.meta.glob('../../pages/notes/**/*.md', { eager: true }))
+//   );
+//   const allNotesTotal = allNotes.length;
+//   return paginate(allNotes, { pageSize: 1 });
+// }
 
 //export async function getStaticPaths({ paginate }) {
   // const allNotes = Object.values(import.meta.glob('../**/*.md', { eager: true }));
@@ -20,7 +20,7 @@ export async function getStaticPaths({ paginate }) {
   // return paginate(allNotes, { pageSize: 1 });
 //}
 
-const { page } = Astro.props;
+// const { page } = Astro.props;
 ---
 
 
@@ -49,4 +49,4 @@ const { page } = Astro.props;
 
 
 <!-- <NotesNavigation currUrl={page.url.current} prevUrl={page.url.prev} nextUrl={page.url.next}/> -->
-<NotesNavigation page={page} />
+<!-- <NotesNavigation page={page} /> -->

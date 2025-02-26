@@ -2,10 +2,14 @@
 const { currentUrl, frontmatter, prevNote, nextNote } = Astro.props;
 console.log('notes nav current page' , {currentUrl});
 console.log('the notes nav props are ', {prevNote} ,{nextNote});
+const allTheNotes = Object.values(import.meta.glob('../pages/notes/**/*.md', { eager: true }));
+const totalNotes = allTheNotes.length;
+console.log('total notes are',totalNotes);
 ---
 
 <p>notes navigation</p>
 <p>Current URL: {currentUrl}</p>
+<p>total notes {totalNotes}</p>
 
 <!-- <p>prevNote: {JSON.stringify(prevNote)}</p>
 <p>nextNote: {JSON.stringify(nextNote)}</p> -->
