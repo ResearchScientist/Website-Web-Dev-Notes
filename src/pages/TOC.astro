@@ -1,43 +1,47 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
 
+// const { frontmatter } = Astro.props;
+// const { title, section } = frontmatter;
+
 // Get all markdown files
 const foundNotes = import.meta.glob('./notes/**/*.md', { eager: true });
 const allNotes = Object.values(foundNotes);
 console.log(allNotes.length);
 
-allNotes.forEach(note => {
-  console.log(note.frontmatter.section);
-});
+// allNotes.forEach(note => {
+//   console.log(note.frontmatter.section);
+// });
 
-// Get all unique chapters from the notes
-const uniqueChapters = [...new Set(allNotes.map(note => note.frontmatter.section))];
+// Get all unique sections from the notes
+const uniqueSection = [...new Set(allNotes.map(note => note.frontmatter.section))];
+console.log(uniqueSection,uniqueSection.length);
 
-// Group notes by chapter
-const notesByChapter = allNotes.reduce((acc, note) => {
-  const { chapter } = note.frontmatter;
-  if (!acc[chapter]) {
-    acc[chapter] = [];
+// Group notes by section
+const notesBySection = allNotes.reduce((acc, note) => {
+  const { section } = note.frontmatter;
+  if (!acc[section]) {
+    acc[section] = [];
   }
-  acc[chapter].push(note);
+  acc[section].push(note);
   return acc;
 }, {});
 
-// Sort chapters based on their appearance in uniqueChapters
-const sortedChapters = uniqueChapters.map(chapter => {
+// display notesBySection object and all its properties as a string
+const notesBySectionString = JSON.stringify(notesBySection, null, 2);
+
+// Sort sections based on their appearance in uniqueSections
+const sortedSections = uniqueSection.map(section => {
   return {
-    name: chapter,
-    notes: (notesByChapter[chapter] || []).sort((a, b) => {
-      // If order property exists, use it for sorting
-      if (a.frontmatter.order !== undefined && b.frontmatter.order !== undefined) {
-        return a.frontmatter.order - b.frontmatter.order;
-      }
-      
-      // Otherwise, sort by file path
+    name: section,
+    notes: (notesBySection[section] || []).sort((a, b) => {
+      // Sort by file path
       return a.file.localeCompare(b.file);
     })
   };
 });
+
+console.log(sortedSections);
 
 // Format chapter name for display
 const formatChapterName = (name) => {
@@ -54,11 +58,11 @@ const formatChapterName = (name) => {
     <p>Browse through all available notes organized by chapter.</p>
     
     <div class="toc">
-      {sortedChapters.map(chapter => (
+      {sortedSections.map(section => (
         <div class="chapter">
-          <h2>{formatChapterName(chapter.name)}</h2>
+          <h2>{formatChapterName(section.name)}</h2>
           <ul>
-            {chapter.notes.map(note => (
+            {section.notes.map(note => (
               <li>
                 <a href={note.url}>
                   {note.frontmatter.title}
@@ -123,12 +127,12 @@ const formatChapterName = (name) => {
   }
   
   li {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.2rem;
   }
   
   li a {
     display: block;
-    padding: 0.5rem;
+    padding: 0.2rem;
     color: #4f46e5;
     text-decoration: none;
     border-radius: 4px;
