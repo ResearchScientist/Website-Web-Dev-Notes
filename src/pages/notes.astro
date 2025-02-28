@@ -1,23 +1,36 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
-import FetchedNote from '../components/FetchedNote.astro';
 
-const gitNotes = await Astro.glob('../pages/notes/00Git/*.md');
-const htmlNotes = await Astro.glob('../pages/notes/01HTML/*.md');
-const cssNotes = await Astro.glob('../pages/notes/02CSS/*.md');
-const jsNotes = await Astro.glob('../pages/notes/03JavaScript/*.md');
-const designNotes = await Astro.glob('../pages/notes/04Design/*.md');
-const performanceNotes = await Astro.glob('../pages/notes/05Performance/*.md');
-const debuggingNotes = await Astro.glob('../pages/notes/06Debugging/*.md');
-const svgNotes = await Astro.glob('../pages/notes/07SVG/*.md');
-const canvasNotes = await Astro.glob('../pages/notes/08Canvas/*.md');
-const webglNotes = await Astro.glob('../pages/notes/09WebGL/*.md');
-const audioNotes = await Astro.glob('../pages/notes/10Audio/*.md');
-const videoNotes = await Astro.glob('../pages/notes/11Video/*.md');
+const foundNotes = import.meta.glob('./notes/**/*.md', { eager: true });
+const allNotes = Object.values(foundNotes);
+const totalNotes = allNotes.length;
+// allNotes.forEach(note => {
+//   console.log(note.frontmatter.section , note.frontmatter.title);
+// });
+
+const Sections = [...new Set(allNotes.map(note => note.frontmatter.section))];
+console.log(Sections , Sections.length);
+
+const notesBySection = allNotes.reduce((acc, note) => {
+  const { section } = note.frontmatter;
+  if (!acc[section]) {
+    acc[section] = [];
+  }
+  acc[section].push(note);
+  return acc;
+}, {});
+
+const sortedSections = Sections.map(section => {
+  return {
+    sectionName: section,
+    notesList: (notesBySection[section] || []).sort((a, b) => {
+      return a.file.localeCompare(b.file); // sorty by file path
+    })
+  };
+});
+
 const pageTitle = 'Web Development Notes';
 const pageDescription = 'Table of Contents for all my front-end web development notes. Click on any listed item to be taken to its corresponding page.';
-const allTheNotes = await Astro.glob('../pages/notes/**/*.md');
-const totalNotes = allTheNotes.length;
 ---
 
 <MainLayout pageTitle={pageTitle} pageDescription={pageDescription}>
@@ -31,78 +44,18 @@ const totalNotes = allTheNotes.length;
         </section>
         <section id='TOC'>
             <h2>Table Of Contents</h2>
-            <h3>Git</h3>
-            <nav>
-                <ol type="i">
-                    {gitNotes.map((note) => <FetchedNote url={note.url} title={note.frontmatter.title} />)}
-                </ol>
-            </nav>
-            <h3>HTML</h3>
-            <nav>
-                <ol type="i">
-                    {htmlNotes.map((note) => <FetchedNote url={note.url} title={note.frontmatter.title} />)}
-                </ol>
-            </nav>
-            <h3>CSS</h3>
-            <nav>
-                <ol type="i">
-                    {cssNotes.map((note) => <FetchedNote url={note.url} title={note.frontmatter.title} />)}
-                </ol>
-            </nav>
-            <h3>JavaScript</h3>
-            <nav>
-                <ol type="i">
-                    {jsNotes.map((note) => <FetchedNote url={note.url} title={note.frontmatter.title} />)}
-                </ol>
-            </nav>
-            <h3>Design</h3>
-            <nav>
-                <ol type="i">
-                    {designNotes.map((note) => <FetchedNote url={note.url} title={note.frontmatter.title} />)}
-                </ol>
-            </nav>
-            <h3>Performance</h3>
-            <nav>
-                <ol type="i">
-                    {performanceNotes.map((note) => <FetchedNote url={note.url} title={note.frontmatter.title} />)}
-                </ol>
-            </nav>
-            <h3>Debugging</h3>
-            <nav>
-                <ol type="i">
-                    {debuggingNotes.map((note) => <FetchedNote url={note.url} title={note.frontmatter.title} />)}
-                </ol>
-            </nav>
-            <h3>SVG</h3>
-            <nav>
-                <ol type="i">
-                    {svgNotes.map((note) => <FetchedNote url={note.url} title={note.frontmatter.title} />)}
-                </ol>
-            </nav>
-            <h3>Canvas</h3>
-            <nav>
-                <ol type="i">
-                    {canvasNotes.map((note) => <FetchedNote url={note.url} title={note.frontmatter.title} />)}
-                </ol>
-            </nav>
-            <h3>WebGL</h3>
-            <nav>
-                <ol type="i">
-                    {webglNotes.map((note) => <FetchedNote url={note.url} title={note.frontmatter.title} />)}
-                </ol>
-            </nav>
-            <h3>Audio</h3>
-            <nav>
-                <ol type="i">
-                    {audioNotes.map((note) => <FetchedNote url={note.url} title={note.frontmatter.title} />)}
-                </ol>
-            </nav>
-            <h3>Video</h3>
-            <nav>
-                <ol type="i">
-                    {videoNotes.map((note) => <FetchedNote url={note.url} title={note.frontmatter.title} />)}
-                </ol>
-            </nav>
+            {sortedSections.map(section => (
+                <h3>{section.sectionName}</h3>
+                <nav>
+                    <ol type="i">
+                        {section.notesList.map(note => (
+                        <li>
+                            <a href={note.url}>{note.frontmatter.title}</a>
+                        </li>
+                        ))}
+                    </ol>
+                </nav>
+            ))}
         </section>
     </main>
 </MainLayout>
